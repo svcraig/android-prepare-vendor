@@ -157,10 +157,10 @@ accept_tos
 
 # Then retrieve the index page
 if [ "$OTA" = true ]; then
-  url=$(curl -L -b "$COOKIE_FILE" --cookie "devsite_wall_acks=nexus-ota-tos" --silent "$GURL2" | \
+  url=$(curl --http1.1 -L -b "$COOKIE_FILE" --cookie "devsite_wall_acks=nexus-ota-tos" --silent "$GURL2" | \
         grep -i "<a href=.*$DEV_ALIAS-ota-$BUILDID-" | cut -d '"' -f2)
 else
-  url=$(curl -L -b "$COOKIE_FILE" --cookie "devsite_wall_acks=nexus-image-tos" --silent "$GURL" | \
+  url=$(curl --http1.1 -L -b "$COOKIE_FILE" --cookie "devsite_wall_acks=nexus-image-tos" --silent "$GURL" | \
         grep -i "<a href=.*$DEV_ALIAS-$BUILDID-" | cut -d '"' -f2)
 fi
 if [ "$url" == "" ]; then
@@ -170,6 +170,6 @@ fi
 
 echo "[*] Downloading image from '$url'"
 outFile=$OUTPUT_DIR/$(basename "$url")
-curl -L -C - -o "$outFile" "$url"
+curl --http1.1 -L -C - -o "$outFile" "$url"
 
 abort 0
