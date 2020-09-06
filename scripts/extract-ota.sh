@@ -150,3 +150,4 @@ if [[ "$VENDOR" == "google" && "$OTA_IMGS_LIST" != "" ]]; then
 fi
 
 abort 0
+
